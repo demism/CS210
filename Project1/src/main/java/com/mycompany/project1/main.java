@@ -16,7 +16,6 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         System.out.println("Hello world");
         Scanner scnr = new Scanner(System.in);
         int x;
