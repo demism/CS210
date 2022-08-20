@@ -1,0 +1,7 @@
+Ladder at square 1
+Chute at square 4
+Chute at square 5
+Chute at square 6
+Chute at square 7
+Chute at square 8
+Chute at square 9

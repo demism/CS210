@@ -1,0 +1,82 @@
+/**
+ * Program to manage a list of rainfall records for a specific US city
+ * with monthly rainfall amounts recorded.
+ * Rain measurement data for the city will be read from a text file.
+ * The user will be able to display the rainfall list, determine the avareage
+ * rainfall for any particular month, find the date(s) that had the most and
+ * least amount rainfall, insert new records into the list, and re-save the
+ * rainfall data to a new file.
+ * 
+ * @author FIX ME
+ * @version 1.0
+ */
+
+import java.io.IOException;
+import java.util.Scanner;
+
+public class RainRecordsManager {
+   final static int EARLIEST_YEAR = 1900;  // earliest rain measured
+   final static int CURRENT_YEAR = 2021;   // latest rain measured
+
+   /**
+    * Creates cityRain data structure for one city,
+    * reads data from an input file, and then lets the user manage the 
+    * data structure via a menu of options, until the user chooses to exit.
+    * 
+    * @param args the command line arguments
+    */
+   public static void main(String[] args) {
+      char choice;
+     // FIX ME - declare additional variables here
+      
+      // Instantiate a Scanner object to read from the keyboard
+      Scanner keyboard = new Scanner(System.in);
+      
+      // Instantiate a CityMonthlyRainListImpl object named cityRain
+      // The object will contain null location values and an
+      // instantiated, but empty, RainFall ArrayList data structure
+      CityMonthlyRainListImpl cityRain = new CityMonthlyRainListImpl();
+      
+      // Read and store the user-entered location into cityRain
+      // then display a program header
+      cityRain.readLocation(keyboard);
+      System.out.println();      
+      System.out.println("Program to manage rainfall records for " +
+            cityRain.getCity() + ", " + cityRain.getState());
+      System.out.println();
+      
+      // FIX ME - start adding main() method code here
+
+      
+   }
+   
+   /**
+    * Method displays menu to user and then
+    * reads, uppercases, validates, and returns user choice from a menu
+    * 
+    * FIX ME - add @param and @return tags
+    */
+   public static char method1template () {
+      // FIX ME - add method body here for Test 6
+      
+      
+      // FIX ME - modify the return value
+      return 'X';
+   }
+   
+   /**
+    * Method readDateNum will read an integer from the user 
+    * until a valid value between the minimum and maximum parameters 
+    * is entered 
+    * 
+    * FIX ME - add @param and @return tags
+    */
+   public static int readDateNum ( /*FIX ME - add parameters */ ) {
+      // FIX ME - add method body here for Tests 9 & 10
+      
+
+      // FIX ME - modify the return value
+      return 0;
+   }   
+   
+}

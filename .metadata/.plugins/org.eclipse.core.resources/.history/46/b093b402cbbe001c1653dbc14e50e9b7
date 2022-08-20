@@ -1,0 +1,337 @@
+/**
+ * Class to define data fields and methods for an ArrayList of RainFall objects
+ * which represents a list of measured rainfall amounts in one city
+ * during various months 
+ * 
+ * Stores the city, state, and list of rainfall data for one city
+ * Includes methods to display items in the monthlyRainList, add a measurement, 
+ * update a measurement, find the month with the highest rainfall amount, 
+ * and re-save the rainfall data to another file.
+ * 
+ * @author Demis Mota
+ * @version 1.0
+ */
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class CityMonthlyRainListImpl {
+	final static double MAX_RAIN = 100.00;
+   private String city;
+   private String state;
+   private ArrayList<RainFall> monthlyRainList;
+
+   /**
+    * Default constructor
+    */
+   public CityMonthlyRainListImpl() {
+      this.city = null;
+      this.state = null;
+      this.monthlyRainList = new ArrayList<RainFall>();
+   }
+
+   /**
+    * Getter for city
+    * 
+    * @return city
+    */
+   public String getCity() {
+      return city;
+   }
+
+   /**
+    * Setter for city
+    * 
+    * @param city 
+    */
+   public void setCity(String city) {
+      this.city = city;
+   }
+
+   /**
+    * Getter for state
+    * 
+    * @return state 
+    */
+   public String getState() {
+      return state;
+   }
+
+   /**
+    * Setter for state
+    * 
+    * @param state 
+    */
+   public void setState(String state) {
+      this.state = state;
+   }
+
+   /**
+    * Getter for monthlyRainList
+    * NOTE:  Used for testing -- do NOT delete
+    * 
+    * @return monthlyRainList
+    */
+   public ArrayList<RainFall> getMonthlyRainList() {
+      return monthlyRainList;
+   }
+
+   /**
+     * Method readLocation will read and error check location entered by user 
+     * and set the city and state data fields with validated values
+	  * 
+     * @param keyboard - Scanner to read user input from keyboard
+     */
+   public void readLocation(Scanner keyboard) {
+	  boolean loop = true;
+      String input = null;
+      String regex = "^[[a-zA-Z-]*[\\ ]?[a-zA-Z-]*]*$";
+      String regex2 = "^[a-zA-Z][a-zA-Z]$";
+      
+      while (loop) 
+      {
+    	  System.out.println("Enter city:");
+       	  input = keyboard.nextLine().toUpperCase();
+       	  if (input.matches(regex)) {
+       		setCity(input);
+       		loop = false;
+       	  }
+       	  else
+       		  System.out.println("ERROR: " + input + " is not a valid city name");
+      }
+      
+      
+      loop = true;
+      while (loop)
+      {
+    	  System.out.println("Enter two-letter state abbreviation:");
+    	  input = keyboard.nextLine().toUpperCase();
+    	  if (input.matches(regex2)) {
+    		  setState(input);
+       		  loop = false;       		  
+    	  }
+    	  else
+    		  System.out.println("ERROR: " + input + " is not a valid state abbreviation");
+      }
+   }
+   
+   /**
+    * Method readRainDataFile will read data from input data file
+    * Each line will contain a month number, a 4-digit year, and 
+    * the amount of measured rain for that month and year,
+    * with each value separated by a space. Sample file lines:
+    * 1 2019 1.35
+    * 2 2020 2.51
+    * 5 2020 3.62
+    * The lines will be stored in chronological order, by date.
+    * The method will create a RainFall object from each line of data, 
+    * and place the object into the monthlyRainList ArrayList.
+	 * Thrown exceptions are handled by the caller.
+    * 
+    * @param filename
+    * @throws IOException automatically, when input file cannot be opened
+    * @return monthlyRainList size
+    */
+   public int readRainDataFile(String filename) throws IOException {
+	   FileInputStream fbs = null;
+	   int month;
+	   int year;
+	   double amtRain;
+	   
+	   fbs = new FileInputStream(filename);
+	   Scanner infile = new Scanner(fbs);
+	   
+	   while (infile.hasNext())
+	   {
+		   month = infile.nextInt();
+		   year = infile.nextInt();
+		   amtRain = infile.nextDouble();
+		   monthlyRainList.add(new RainFall(month,year,amtRain));
+	   }
+	   infile.close();
+	   fbs.close();
+	   return monthlyRainList.size();
+   }
+ 
+   /**
+    * Method displayRainList will display rainfall for all dates
+    */ 
+   public void displayRainList() {
+	   int count = 0;
+	   RainFall rf = null;
+      System.out.println();
+      System.out.println(getCity() + ", " + getState() + " monthly rainfall records");
+      while ( count < monthlyRainList.size() ) {
+    	  rf = monthlyRainList.get(count);
+    	  System.out.printf("  %02d/%d had %.2f inches of rain\n", rf.getMonth(), rf.getYear(), rf.getMeasuredRain());
+    	  count++;
+      }
+   }
+   
+   /**
+    * Overloaded method displayRainList will display rainfall 
+    * for all stored months within one year, along with a total
+    * 
+    * @param int year
+    */
+   public void displayRainList(int year) {
+	   int count = 0;
+	   int months = 0;
+	   double totalRain = 0.0;
+	   RainFall rf = null;
+	   
+	   System.out.println();
+	   System.out.println(getCity() + ", " + getState() + " monthly rainfall records for " + year);
+	   while ( count < monthlyRainList.size()) {
+		   rf = monthlyRainList.get(count);
+		   if ( year == rf.getYear()) {
+			   System.out.printf("  %02d/%d had %.2f inches of rain\n", rf.getMonth(), rf.getYear(), rf.getMeasuredRain());
+			   months++;
+			   totalRain += rf.getMeasuredRain();
+		   }
+		   count++;
+	   }
+	   System.out.printf("Total of %.2f inches of rain over %d months",totalRain,months);
+	   System.out.println();
+   }
+ 
+   /**
+    * Method calcAverageRainForMonth will calculate the average rainfall 
+    * for one month, for all years stored
+    * 
+    * @param int month
+    * @return averageRainFall
+    */
+   public double calcAverageRainForMonth(int month) {
+      double averageRainFall = 0.00;
+      double totalRainFall = 0.00;
+      int totalMonths = 0;
+      RainFall rf = null;
+      
+      for (int i=0; i < monthlyRainList.size(); i++)
+      {
+    	  rf = monthlyRainList.get(i);
+    	  if ( month == rf.getMonth())
+    	  {
+    		totalMonths++;
+    		totalRainFall += rf.getMeasuredRain();
+    	  }
+      }
+      averageRainFall = totalRainFall / totalMonths;
+      return averageRainFall;
+   }
+   
+   /**
+    * Method displayHighestRainDates will display date(s) with highest rainfall
+    */ 
+   public void displayHighestRainDates() {
+	   double highestRate = 0.0;
+	   for (int i=0; i < monthlyRainList.size(); i++) {
+		   if ( monthlyRainList.get(i).getMeasuredRain() > highestRate)
+			   highestRate = monthlyRainList.get(i).getMeasuredRain();		   
+	   }
+	   
+	   System.out.printf("%s, %s date(s) with most rain (%.2f inches) measured:\n", city, state, highestRate);
+	   
+	   for (int i = 0; i < monthlyRainList.size(); i++) {
+		   RainFall rf = monthlyRainList.get(i);
+		   if ( rf.getMeasuredRain() == highestRate) {
+			   System.out.printf("  %02d/%d\n", rf.getMonth(), rf.getYear());
+		   }
+	   }
+   }
+   
+   /**
+    * Method displayLowestRainDates will display date(s) with lowest rainfall
+    */ 
+   public void displayLowestRainDates() {
+	   double lowestRate = MAX_RAIN;
+	   for (int i=0; i < monthlyRainList.size(); i++) {
+		   if ( monthlyRainList.get(i).getMeasuredRain() < lowestRate)
+			   lowestRate = monthlyRainList.get(i).getMeasuredRain();		   
+	   }
+	   
+	   System.out.printf("%s, %s date(s) with least rain (%.2f inches) measured:\n", city, state, lowestRate);
+	   
+	   for (int i = 0; i < monthlyRainList.size(); i++) {
+		   RainFall rf = monthlyRainList.get(i);
+		   if ( rf.getMeasuredRain() == lowestRate) {
+			   System.out.printf("  %02d/%d\n", rf.getMonth(), rf.getYear());
+		   }
+	   }
+      
+   }
+   
+  /**
+    * Method insertMonthsRainFallRecord will insert a new rainfall record 
+    * into the ArrayList in the correct location
+    * (or modify the rainfall measurement of an exisiting record)
+    * 
+    * @param month - of date to add
+    * @param year - of date to add
+    * @param rain - rainfall for date to add
+    */
+   public void insertMonthsRainFallRecord(int month, int year, double rain) {
+      int count = 0;
+      boolean loop = true;
+      RainFall tempRF = null;
+      System.out.println();
+      while ( loop )
+      {
+    	  tempRF = monthlyRainList.get(count);
+    	  if ( ( month == tempRF.getMonth() ) && ( year == tempRF.getYear() ))
+    	  { // existing spot
+    		  System.out.printf("Record for %2d/%d already exists\n",month,year);
+    		  System.out.printf("Changing rainfall measure in record from %.2f to %.2f inches\n",tempRF.getMeasuredRain(),rain);
+    		  monthlyRainList.get(count).setMeasuredRain(rain);
+    		  loop = false;
+    	  }
+    	  else if ( (count != monthlyRainList.size()-1) &&(tempRF.getYear() == year ) && (tempRF.getMonth() < month) && (month < monthlyRainList.get(count + 1).getMonth()))
+    	  { // middle spot 
+    		  System.out.printf("%.2f inches of rain recorded for %02d/%d\n",rain,month,year);
+    		  monthlyRainList.add(count+1, new RainFall(month,year,rain));
+    		  loop = false;
+    	  }
+    	  else if ( ( year < tempRF.getYear() ) || ( (year == tempRF.getYear()) && (month < tempRF.getMonth()) ) )  
+    	  { // First Spot
+    		  System.out.printf("%.2f inches of rain recorded for %02d/%d\n",rain,month,year);
+    		  monthlyRainList.add(count, new RainFall(month,year,rain));
+    		  loop = false;
+    	  }
+    	  else if (count == monthlyRainList.size()-1) 
+    	  {	// Final spot
+    		  System.out.printf("%.2f inches of rain recorded for %02d/%d\n",rain,month,year);
+    		  monthlyRainList.add(new RainFall(month,year,rain));
+    		  loop = false;
+    	  }
+    	  else
+    		  count++;	  
+      }
+      
+   }
+ 
+ 
+   /**
+    * Method writeUpdatedFile will save all data from 
+    * the monthlyRainList ArrayList to a file    
+    * (IOExceptions handled within the method)
+    * Each line written will contain a month number, a 4-digit year, and 
+    * the amount of measured rain for that month and year,
+    * with each value separated by a space. Sample file output lines:
+    * 1 2019 1.35
+    * 2 2020 2.51
+    * 5 2020 3.62
+    * The lines will be stored in chronological order, by date.
+	 * 
+    * @param FIX ME
+	 * @return FIX ME
+    */
+   public int writeUpdatedFile(String filename) {
+      // FIX ME - add method body here for Tests 19 - 22
+		
+      
+      // FIX ME - modify the return value      
+		return 0;
+   }   
+   
+}

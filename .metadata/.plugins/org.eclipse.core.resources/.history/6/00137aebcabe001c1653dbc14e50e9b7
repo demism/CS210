@@ -1,0 +1,177 @@
+/**
+ * /Program to manage a list of rainfall records for a specific US city
+ * with monthly rainfall amounts recorded.
+ * Rain measurement data for the city will be read from a text file.
+ * The user will be able to display the rainfall list, determine the average
+ * rainfall for any particular month, find the date(s) that had the most and
+ * least amount rainfall, insert new records into the list, and re-save the
+ * rainfall data to a new file.
+ * 
+ * @author Demis Mota
+ * @version 1.0
+ */
+
+import java.io.IOException;
+import java.util.Scanner;
+
+public class RainRecordsManager {
+   final static int EARLIEST_YEAR = 1900;  // earliest rain measured
+   final static int CURRENT_YEAR = 2021;   // latest rain measured
+
+   /**
+    * Creates cityRain data structure for one city,
+    * reads data from an input file, and then lets the user manage the 
+    * data structure via a menu of options, until the user chooses to exit.
+    * 
+    * @param args the command line arguments
+    */
+   public static void main(String[] args) {
+      char choice = 0;
+      String filename = null;
+      int amountRainData = 0;
+      int year;
+      int month;
+      double avgRain = 0.0;
+      double rain = 0.0;
+      
+      // Instantiate a Scanner object to read from the keyboard
+      Scanner keyboard = new Scanner(System.in);
+      
+      // Instantiate a CityMonthlyRainListImpl object named cityRain
+      // The object will contain null location values and an
+      // instantiated, but empty, RainFall ArrayList data structure
+      CityMonthlyRainListImpl cityRain = new CityMonthlyRainListImpl();
+      
+      // Read and store the user-entered location into cityRain
+      // then display a program header
+      cityRain.readLocation(keyboard);
+      System.out.println();      
+      System.out.println("Program to manage rainfall records for " +
+            cityRain.getCity() + ", " + cityRain.getState());
+      System.out.println();
+      
+      filename = cityRain.getCity().replace(" ", "") + "rain.txt";
+      try {
+    	  amountRainData = cityRain.readRainDataFile(filename);
+    	  System.out.println("Stored rainfall data for " + amountRainData + " months");
+    	  while (choice != 'E')
+    	  {
+    		  choice = displayMenu(keyboard);
+    		  switch (choice) {
+    		  case 'D':
+    			  cityRain.displayRainList();
+    			  break;
+    		  case 'Y':
+    			  year = readDateNum(keyboard,"4-digit year", EARLIEST_YEAR, CURRENT_YEAR);
+    			  cityRain.displayRainList(year);
+    			  break;
+    		  case 'A':
+    			  month = readDateNum(keyboard,"numeric month",1,12);
+    			  System.out.println();
+    			  avgRain = cityRain.calcAverageRainForMonth(month);
+    			  System.out.printf("The average rainfall in month %d was %2.2f inches\n", month, avgRain);
+    			  break;
+    		  case 'M':
+    			  System.out.println();
+    			  cityRain.displayHighestRainDates();
+    			  break;
+    		  case 'L':
+    			  System.out.println();
+    			  cityRain.displayLowestRainDates();
+    			  break;
+    		  case 'I':
+    			  //System.out.println();
+    			  month = readDateNum(keyboard, "numeric month",1,12);
+    			  year = readDateNum(keyboard, "4-digit year", EARLIEST_YEAR, CURRENT_YEAR);
+    			  System.out.println("Enter measured amount of rain:");
+    			  rain = keyboard.nextDouble();
+    			  cityRain.insertMonthsRainFallRecord(month, year, rain);
+    			  break;
+    		  case 'U':
+    			  break;
+    		  case 'E':
+    			  break;
+    		  default:
+    			  break;
+    		  }
+    	  }
+      }
+      catch (IOException ioe) {
+    	  System.out.println("ERROR: Cannot read input file " + filename);
+    	  System.out.println("**Program exiting");
+      }
+   }
+   
+   /**
+    * Method displays menu to user and then
+    * reads, uppercases, validates, and returns user choice from a menu
+    * 
+    * @param Scanner input
+    * @return choice character
+    */
+   public static char displayMenu (Scanner input) {
+	   
+	   char choice = 0;
+	   boolean loop = true;
+	   
+	   do {
+		   System.out.println();
+		   System.out.println("MENU");
+		   System.out.println("  D = Display all monthly rain measurements");
+		   System.out.println("  Y = Display monthly rain measurements for one Year");
+		   System.out.println("  A = Average rainfall for one month");
+		   System.out.println("  M = Most rain in one month");
+		   System.out.println("  L = Least rain in one month");
+		   System.out.println("  I = Insert a new monthly rain measure record");
+		   System.out.println("  U = Update rain data file");
+		   System.out.println("  E = Exit program");
+		   System.out.println("Enter choice:");
+		   choice = input.next().toUpperCase().charAt(0);
+		   
+		   switch(choice)
+		   {
+		   	case 'D':  
+		   	case 'Y':
+ 		  	case 'A':
+ 		  	case 'M':		  
+ 		  	case 'L':
+ 		  	case 'I':
+ 		  	case 'U':
+ 		  	case 'E':
+ 		  		loop = false;
+ 		  		break;
+ 		  	default:
+			   System.out.println("ERROR: Invalid menu choice! Try again.");
+			   break;
+		   }
+	   } while (loop);
+
+	   return choice;
+   }
+   
+   /**
+    * Method readDateNum will read an integer from the user 
+    * until a valid value between the minimum and maximum parameters 
+    * is entered 
+    * 
+    * @param Scanner input
+    * @param String prompt
+    * @param int min, int max // min-max value
+    * @return valid value
+    */
+   public static int readDateNum ( Scanner input, String prompt, int min, int max) {
+      int value;
+	   
+      System.out.println("Enter the " + prompt + ":");
+      value = input.nextInt(); 
+      while (value < min || value > max) {
+    	  System.out.println("ERROR: Invalid " + prompt + ". Value must be between " 
+    			  + min + " and " + max);
+    	  System.out.println("Enter the " + prompt + ":");
+          value = input.nextInt();
+      }
+      
+      return value;
+   }   
+   
+}

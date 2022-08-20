@@ -1,0 +1,90 @@
+/**
+ * Class defines data fields, along with constructor, getter 
+ * and setter methods for RainFall objects, which represent a data record 
+ * containing the rainfall measured during one month of one year
+ * 
+ * No additional documentation is necessary for this class
+ */
+public class RainFall {
+   private int month;            // numeric 1 - 12
+   private int year;             // 4-digit year
+   private double measuredRain;  // in inches
+
+   /**
+    * Constructor with parameters
+    * 
+    * @param month - numeric
+    * @param year - 4-digit
+    * @param measuredRain - inches
+    */
+   public RainFall(int month, int year, double measuredRain) {
+      this.month = month;
+      this.year = year;
+      this.measuredRain = measuredRain;
+   }
+
+   /**
+    * Getter for month
+    * 
+    * @return month
+    */
+   public int getMonth() {
+      return month;
+   }
+
+   /**
+    * Setter for month
+    * 
+    * @param month 
+    */
+   public void setMonth(int month) {
+      this.month = month;
+   }
+
+   /**
+    * Getter for year
+    * 
+    * @return year
+    */
+   public int getYear() {
+      return year;
+   }
+
+   /**
+    * Setter for year
+    * 
+    * @param year 
+    */
+   public void setYear(int year) {
+      this.year = year;
+   }
+
+   /**
+    * Getter for measuredRain
+    * 
+    * @return measuredRain
+    */
+   public double getMeasuredRain() {
+      return measuredRain;
+   }
+
+   /**
+    * Setter for measuredRain
+    * 
+    * @param measuredRain 
+    */
+   public void setMeasuredRain(double measuredRain) {
+      this.measuredRain = measuredRain;
+   }
+
+   /**
+    * Method to create String with labeled data field values
+    * 
+    * @return String with labeled data field values
+    */
+   @Override
+   public String toString() {
+      return "RainFall{" + "month=" + month + ", year=" + year + ", measuredRain=" + measuredRain + '}';
+   }
+    
+}

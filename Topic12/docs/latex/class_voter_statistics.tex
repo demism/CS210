@@ -1,0 +1,103 @@
+\hypertarget{class_voter_statistics}{}\doxysection{Voter\+Statistics Class Reference}
+\label{class_voter_statistics}\index{VoterStatistics@{VoterStatistics}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_voter_statistics_a65d3600011dce4b21fa6bd54765a8cf0}\label{class_voter_statistics_a65d3600011dce4b21fa6bd54765a8cf0}} 
+String {\bfseries get\+State\+Name} ()
+\item 
+\mbox{\Hypertarget{class_voter_statistics_a0254e88f069ad758ebc2a6e2d539cb8f}\label{class_voter_statistics_a0254e88f069ad758ebc2a6e2d539cb8f}} 
+int {\bfseries get\+Population} ()
+\item 
+\mbox{\Hypertarget{class_voter_statistics_aa4fe8d186024115de354aea50b75b512}\label{class_voter_statistics_aa4fe8d186024115de354aea50b75b512}} 
+int {\bfseries get\+Num\+Republicans} ()
+\item 
+\mbox{\Hypertarget{class_voter_statistics_a6bfacf7fec24288ba1e5ab265c8d6d65}\label{class_voter_statistics_a6bfacf7fec24288ba1e5ab265c8d6d65}} 
+int {\bfseries get\+Num\+Democrats} ()
+\item 
+\mbox{\Hypertarget{class_voter_statistics_a96f2e2f6f5c428c29583ea285d2bd1aa}\label{class_voter_statistics_a96f2e2f6f5c428c29583ea285d2bd1aa}} 
+int {\bfseries get\+Num\+Other} ()
+\item 
+\mbox{\Hypertarget{class_voter_statistics_aaf5c8f3b330933d7877c36951d7f7cd2}\label{class_voter_statistics_aaf5c8f3b330933d7877c36951d7f7cd2}} 
+void {\bfseries set\+State\+Name} (String state\+Name)
+\item 
+\mbox{\Hypertarget{class_voter_statistics_a39f417b6479c8a493136b6d97d8f378b}\label{class_voter_statistics_a39f417b6479c8a493136b6d97d8f378b}} 
+void {\bfseries set\+Population} (int population)
+\item 
+\mbox{\Hypertarget{class_voter_statistics_aa2f47fbfb7ee57d0ebe76e15bf9216d0}\label{class_voter_statistics_aa2f47fbfb7ee57d0ebe76e15bf9216d0}} 
+void {\bfseries set\+Num\+Republicans} (int num\+Republicans)
+\item 
+\mbox{\Hypertarget{class_voter_statistics_a8f951bb8e3bd399e220d3550090607c0}\label{class_voter_statistics_a8f951bb8e3bd399e220d3550090607c0}} 
+void {\bfseries set\+Num\+Democrats} (int num\+Democrats)
+\item 
+\mbox{\Hypertarget{class_voter_statistics_a22d120666b625d84b0152f35916fc54f}\label{class_voter_statistics_a22d120666b625d84b0152f35916fc54f}} 
+void {\bfseries set\+Num\+Other} (int num\+Other)
+\item 
+int \mbox{\hyperlink{class_voter_statistics_abba3c9c7a45a3ccb719627ad7476c6c2}{read\+Registrations}} (Scanner keyboard, String reg\+Type)
+\begin{DoxyCompactList}\small\item\em Reads in number of voters for a particular party. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_voter_statistics_a53130a9dd0fc1ae4c58e061b629836df}{update\+Registrations}} (Scanner keyboard)
+\begin{DoxyCompactList}\small\item\em Calls read\+Registrations and sets number of voters per party. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{class_voter_statistics_a15acf39d20156f4091450a5046d0afcc}{calc\+Percent\+Registered}} ()
+\begin{DoxyCompactList}\small\item\em Returns the percentage of registered voters to eligible population. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Demis Mota 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_voter_statistics_a15acf39d20156f4091450a5046d0afcc}\label{class_voter_statistics_a15acf39d20156f4091450a5046d0afcc}} 
+\index{VoterStatistics@{VoterStatistics}!calcPercentRegistered@{calcPercentRegistered}}
+\index{calcPercentRegistered@{calcPercentRegistered}!VoterStatistics@{VoterStatistics}}
+\doxysubsubsection{\texorpdfstring{calcPercentRegistered()}{calcPercentRegistered()}}
+{\footnotesize\ttfamily int Voter\+Statistics.\+calc\+Percent\+Registered (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Returns the percentage of registered voters to eligible population. 
+
+\begin{DoxyReturn}{Returns}
+percent\+Registered 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voter_statistics_abba3c9c7a45a3ccb719627ad7476c6c2}\label{class_voter_statistics_abba3c9c7a45a3ccb719627ad7476c6c2}} 
+\index{VoterStatistics@{VoterStatistics}!readRegistrations@{readRegistrations}}
+\index{readRegistrations@{readRegistrations}!VoterStatistics@{VoterStatistics}}
+\doxysubsubsection{\texorpdfstring{readRegistrations()}{readRegistrations()}}
+{\footnotesize\ttfamily int Voter\+Statistics.\+read\+Registrations (\begin{DoxyParamCaption}\item[{Scanner}]{keyboard,  }\item[{String}]{reg\+Type }\end{DoxyParamCaption})}
+
+
+
+Reads in number of voters for a particular party. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em keyboard} & \\
+\hline
+{\em reg\+Type} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+num\+Voters 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_voter_statistics_a53130a9dd0fc1ae4c58e061b629836df}\label{class_voter_statistics_a53130a9dd0fc1ae4c58e061b629836df}} 
+\index{VoterStatistics@{VoterStatistics}!updateRegistrations@{updateRegistrations}}
+\index{updateRegistrations@{updateRegistrations}!VoterStatistics@{VoterStatistics}}
+\doxysubsubsection{\texorpdfstring{updateRegistrations()}{updateRegistrations()}}
+{\footnotesize\ttfamily void Voter\+Statistics.\+update\+Registrations (\begin{DoxyParamCaption}\item[{Scanner}]{keyboard }\end{DoxyParamCaption})}
+
+
+
+Calls read\+Registrations and sets number of voters per party. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em keyboard} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/main/java/Voter\+Statistics.\+java\end{DoxyCompactItemize}
