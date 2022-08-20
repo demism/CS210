@@ -1,2 +1,2 @@
 # CS210 - Intro to Programming (Java)
-Assignments
+Regis University - CS210 - Intro to Programming (Java)
